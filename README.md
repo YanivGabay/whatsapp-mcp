@@ -210,6 +210,53 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
 }
 ```
 
+### Connect to Claude Code (CLI)
+
+Claude Code uses stdio transport, so we need a proxy to bridge to the HTTP server.
+
+1. **Copy the example config**
+   ```bash
+   cp .mcp.json.example .mcp.json
+   ```
+
+2. **Edit `.mcp.json`** with your API key:
+   ```json
+   {
+     "mcpServers": {
+       "whatsapp": {
+         "type": "stdio",
+         "command": "python3",
+         "args": ["-u", "./mcp-stdio-proxy.py"],
+         "env": {
+           "MCP_API_KEY": "your-secret-api-key-here",
+           "PYTHONUNBUFFERED": "1"
+         }
+       }
+     }
+   }
+   ```
+
+3. **Install the proxy dependency**
+   ```bash
+   pip install requests
+   ```
+
+4. **Start Claude Code** in the project directory
+   ```bash
+   claude
+   ```
+
+The proxy (`mcp-stdio-proxy.py`) bridges Claude Code's stdio transport to the HTTP server, handling session management automatically.
+
+**Environment variables for the proxy:**
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `MCP_API_KEY` | (required) | Your WhatsApp MCP API key |
+| `MCP_HOST` | `localhost` | MCP server hostname |
+| `MCP_PORT` | `8080` | MCP server port |
+| `MCP_TIMEOUT` | `30` | Request timeout in seconds |
+| `MCP_DEBUG` | `false` | Enable debug logging to `/tmp/mcp-proxy.log` |
+
 ### Connect to Other MCP Clients
 
 The server exposes an HTTP+SSE endpoint compatible with any MCP client:

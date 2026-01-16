@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "whatsapp": {
+      "type": "stdio",
+      "command": "python3",
+      "args": ["-u", "./mcp-stdio-proxy.py"],
+      "env": {
+        "MCP_API_KEY": "your-secret-api-key-here",
+        "MCP_HOST": "localhost",
+        "MCP_PORT": "8080",
+        "PYTHONUNBUFFERED": "1"
+      }
+    }
+  }
+}

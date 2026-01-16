@@ -1,3 +1,5 @@
 data/*
 qr.png
 .env
+.mcp.json
+/tmp/mcp-proxy.log
